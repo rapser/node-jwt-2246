@@ -1,13 +1,13 @@
-const express = require('express');
-const jwt = require('jsonwebtoken');
+import express from 'express'
+import jwt from 'jsonwebtoken'
 
-const app = express();
+const app = express()
 
 app.get('/api', (req, res) => {
   res.json({
     message: 'Welcome to the API'
-  });
-});
+  })
+})
 
 app.post('/api/posts', verifyToken, (req, res) => {  
   jwt.verify(req.token, 'secretkey', (err, authData) => {
@@ -17,10 +17,10 @@ app.post('/api/posts', verifyToken, (req, res) => {
       res.json({
         message: 'Post created...',
         authData
-      });
+      })
     }
-  });
-});
+  })
+})
 
 app.post('/api/login', (req, res) => {
   // Mock user
@@ -30,12 +30,12 @@ app.post('/api/login', (req, res) => {
     email: 'brad@gmail.com'
   }
 
-  jwt.sign({user}, 'secretkey', { expiresIn: '30s' }, (err, token) => {
+  jwt.sign({user}, 'secretkey', { expiresIn: '120s' }, (err, token) => {
     res.json({
       token
-    });
-  });
-});
+    })
+  })
+})
 
 // FORMAT OF TOKEN
 // Authorization: Bearer <access_token>
@@ -47,18 +47,18 @@ function verifyToken(req, res, next) {
   // Check if bearer is undefined
   if(typeof bearerHeader !== 'undefined') {
     // Split at the space
-    const bearer = bearerHeader.split(' ');
+    const bearer = bearerHeader.split(' ')
     // Get token from array
-    const bearerToken = bearer[1];
+    const bearerToken = bearer[1]
     // Set the token
-    req.token = bearerToken;
+    req.token = bearerToken
     // Next middleware
-    next();
+    next()
   } else {
     // Forbidden
-    res.sendStatus(403);
+    res.sendStatus(403)
   }
 
 }
 
-app.listen(5000, () => console.log('Server started on port 5000'));
+app.listen(5000, () => console.log('Server started on port 5000'))
