@@ -1,4 +1,4 @@
-# Node.js ejemplo jsonwebtoken
+# node-jwt-2246
 
 > Un ejemplo de como proteger las rutas con un token
 > Actualizado a ES6
